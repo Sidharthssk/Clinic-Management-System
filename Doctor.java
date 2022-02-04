@@ -4,8 +4,8 @@ import java.io.PrintWriter;
 import java.util.Scanner;
 
 class Doctor {
-    private String name = "James";
-    private int doctid = 22345;
+    private static  String name = "James";
+    private static  int doctid = 22345;
    
 
     public String getName(){
@@ -14,6 +14,14 @@ class Doctor {
 
     public int getId(){
         return this.doctid;
+    }
+
+    public void setName(String Name){
+        name = Name;
+    }
+
+    public void setId(int ID){
+        doctid = ID;
     }
 
     public static void patientReport() throws Exception {

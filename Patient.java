@@ -1,10 +1,12 @@
 import java.io.FileOutputStream;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.Serializable;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.io.File;
 import java.io.IOException;
@@ -19,8 +21,9 @@ class Helper extends ObjectOutputStream {
   Helper(OutputStream o) throws IOException {
     super(o);
   }
-
-  public void writeStreamHeader() throws IOException {
+  
+  
+  public void writeStreamHeader() throws IOException{
     return;
   }
 }
@@ -32,7 +35,7 @@ public class Patient implements Serializable {
   long p_Phone; // phone of the patient
   String p_Address; // Home address of the patient
   String p_Sex; // sex of the patient
-  long p_Pass;
+  long p_Pass; 
   String p_Problem;
 
   static Scanner p_info = new Scanner(System.in);
@@ -51,18 +54,28 @@ public class Patient implements Serializable {
   }
 
   Patient() {
+     
+    this.p_Id = 0;
+    this.p_Name = null;
+    this.p_Age = 0;
+    this.p_Phone = 0;
+    this.p_Address = null;
+    this.p_Sex = null;
+    this.p_Pass = 0;
+    this.p_Problem = null;
 
   }
 
   
 
-  private static void new_Patient() throws Exception {
+  private static void new_Patient()  {
 
     System.out.println("--------------------------------------------------------------------------------");
     System.out.println("                     **NEW PATIENT SECTION**");
     System.out.println("--------------------------------------------------------------------------------");
     System.out.println(" ");
 
+    try{
     System.out.print(" Name of the patient : ");
     String name = p_info.next();
     System.out.println();
@@ -110,6 +123,18 @@ public class Patient implements Serializable {
       h.writeObject(p);
       fo.close();
     }
+  }
+  catch(InputMismatchException i){
+    System.out.println("Please check the details entered");
+  }
+   
+  catch(FileNotFoundException e){
+    e.printStackTrace();
+  }
+
+  catch(IOException e){
+    e.printStackTrace();
+  }
 
   }
 
@@ -137,7 +162,6 @@ public class Patient implements Serializable {
     Patient P = null;
     while (fi.available() != 0) {
       P = (Patient) oi.readObject();
-
       if (P.p_Id == id) {
         flag = 1;
         break;
@@ -147,6 +171,7 @@ public class Patient implements Serializable {
       System.out.println("Patient is not registered. Kindly goto new Patient section and register");
     else {
       if (P.p_Pass == password) {
+        try{
           File f = new File("PatientReport.txt");
           FileInputStream Fi = new FileInputStream(f);
           Scanner Sc = new Scanner(Fi);
@@ -154,15 +179,21 @@ public class Patient implements Serializable {
             String line = Sc.nextLine();
             System.out.println(line);
           } 
-          System.out.println("\n\n");
           Sc.close();
+        }
+        catch(IOException e){
+          e.printStackTrace();
+        }
+        
+          System.out.println("\n\n");
+          
       }
     }
   }
 
 
   private static void paybill() throws Exception{
-    System.out.print("Enter your name : ");
+        System.out.print("Enter your name : ");
         String name = p_info.next();
         System.out.print("Do you want to pay the bill? (Y/N) : ");
         char pb = p_info.next().charAt(0);
@@ -194,7 +225,8 @@ public class Patient implements Serializable {
     System.out.println("--------------------------------------------------------------------------------");
 
     System.out.println("1.New patient\n2.Login\n3.Pay bill");
-    int p_Option = p_info.nextInt();
+     
+     int p_Option = p_info.nextInt();
     ClearScreen.cls();
 
     switch (p_Option) {

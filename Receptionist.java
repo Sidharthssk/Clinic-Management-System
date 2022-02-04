@@ -6,11 +6,19 @@ import java.io.ObjectInputStream;
 import java.io.PrintWriter;
 
 public class Receptionist  {
-    private String name = "Benjamin";
-    private int Recep_id = 2255;
+    private static  String name = "Benjamin";
+    private static  int Recep_id = 2255;
+
+    public void setName(String Name){
+        name = Name;
+    }
+
+    public void setId(int ID){
+        Recep_id = ID;
+    }
 
     public Receptionist() {
-        // To remove the error while running
+        
     }
 
     public String getname() {

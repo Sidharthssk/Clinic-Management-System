@@ -11,11 +11,11 @@ public class clinicManagement {
 			System.out.println("\t\t\t\t\t\tMain Page\t\t\t\t\t\t\t");
 			System.out.println(calendar.date());
 			System.out.println(
-					"-------------------------------------------------------------------------------------------------------------------");
+					"-------------------------------------------------------------------------------------------------------------------------");
 			System.out.println(
-					"               1.Patient                         2.Doctor                   3.Receptionist               ");
+					"               1.Patient                         2.Doctor                   3.Receptionist                   4.Admin        ");
 			System.out.println(
-					"-------------------------------------------------------------------------------------------------------------------");
+					"-------------------------------------------------------------------------------------------------------------------------");
 
 			System.out.print("Please select the number as per the user : "); // Giving the user the option to select
 			int select_no = info.nextInt();
@@ -26,8 +26,8 @@ public class clinicManagement {
 					while (select_no == 1) {
 						Patient.p_main();
 						System.out.print("Do you want to continue in Patient section?(Y/N) : ");
-						char ch = info.next().charAt(0);
-						if (ch == 'N')
+						String ch = info.next();
+						if ("N".equals(ch))
 							break;
 					}
 					break;
@@ -57,6 +57,20 @@ public class clinicManagement {
 					else{
 						System.out.println("Incorrect ID or Password");
 					}
+					break;
+
+				case 4:
+				   ClearScreen.cls();
+				   System.out.println("Enter admin ID and password");
+				   int adid = info.nextInt();
+                   long password = info.nextLong();
+                    
+				      if(Admin.ID == adid && Admin.pass == password){
+                        Admin.adminmain();
+					  }
+					  else{
+						  System.out.println("Incorrect ID or Password.....");
+					  }
 
 					break;
 
